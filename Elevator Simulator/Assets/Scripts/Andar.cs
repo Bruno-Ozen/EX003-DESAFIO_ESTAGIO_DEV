@@ -14,6 +14,7 @@ public class Andar
 
     public Andar(GameObject andar, int numero_andar, List<Transform> filhosAndar)
     {
+        this.numero_andar = numero_andar;
         this.getGameobjectAndar = andar;
         this.Porta = filhosAndar[0].gameObject;
         this.animacao_troca_personagens = filhosAndar[1].gameObject;

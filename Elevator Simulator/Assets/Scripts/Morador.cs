@@ -56,7 +56,7 @@ public class Morador
 
     public void enviarEventoAoBotaoSobeDesce(AndarMorador andar, Elevador elevador)
     {
-        EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(null, this, andar.getNumero_andar, subir_ou_descer);
+        EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(null, this, null, andar, subir_ou_descer);
         andar.Manipulador_eventos_btn_sobe_desce.dispararEvento(eventoBotaoSobeDesce, elevador);
         this.subir_ou_descer[0] = false;
         this.subir_ou_descer[1] = false;

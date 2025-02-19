@@ -25,22 +25,21 @@ public class Predio
 
         for (int i = 1; i < filhosPredio.Count; i++)
         {
-            andares_moradores[i - 1] = new AndarMorador(filhosPredio[i].gameObject, 1, pega_filhos_diretos(filhosPredio[i]));
+            andares_moradores[i - 1] = new AndarMorador(filhosPredio[i].gameObject, i + 1, pega_filhos_diretos(filhosPredio[i]));
         }
 
         this.andar_usuario = andar_usuario_inst;
         this.Andares_de_moradores = andares_moradores;
         this.Elevador = elevador;
-        this.Qtd_max_moradores = qtd_max_moradores;
-        this.Qtd_andares = this.Andares_de_moradores.Length + 1;
+        this.getQtd_max_moradores = qtd_max_moradores;
+        this.getQtd_andares = this.Andares_de_moradores.Length + 1;
     }
 
-    public int Qtd_andares { get => Qtd_andares1; set => Qtd_andares1 = value; }
-    public GameObject PredioGet { get => predio; set => predio = value; }
+    public int getQtd_andares { get => qtd_andares; set => qtd_andares = value; }
+    public GameObject getPredioObj { get => predio; set => predio = value; }
     public Elevador Elevador { get => elevador; set => elevador = value; }
-    public int Qtd_max_moradores { get => qtd_max_moradores; set => qtd_max_moradores = value; }
-    public int Qtd_andares1 { get => qtd_andares; set => qtd_andares = value; }
-    public AndarUsuario Andar_usuario { get => andar_usuario; set => andar_usuario = value; }
+    public int getQtd_max_moradores { get => qtd_max_moradores; set => qtd_max_moradores = value; }
+    public AndarUsuario getAndar_usuario { get => andar_usuario; set => andar_usuario = value; }
     public AndarMorador[] Andares_de_moradores { get => andares_de_moradores; set => andares_de_moradores = value; }
     public Usuario Usuario { get => usuario; set => usuario = value; }
 

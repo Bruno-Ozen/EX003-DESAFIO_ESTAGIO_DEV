@@ -5,14 +5,10 @@ using UnityEngine;
 public class MEBotaoSobeDesce
 {
 
-    public MEBotaoSobeDesce()
-    { 
-        
-    }
-
     public void dispararEvento(EventoBotaoSobeDesce evento, Elevador elevador)
     {
-
+        Debug.Log("CAIU AQUI 4");
+        elevador.enfileiraEventoSobeOuDesce(evento);
     }
 
 }

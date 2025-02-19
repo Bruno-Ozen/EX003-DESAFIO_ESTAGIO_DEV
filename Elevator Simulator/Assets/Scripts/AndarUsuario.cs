@@ -15,4 +15,11 @@ public class AndarUsuario : Andar
 
     public Usuario getUsuario { get => usuario; }
     public MEBotaoSobeDesce Manipulador_eventos_btn_sobe_desce { get => manipulador_eventos_btn_sobe_desce; set => manipulador_eventos_btn_sobe_desce = value; }
+
+    public void usuario_entrar(Elevador elevador)
+    {
+        this.usuario.getGameObjectUsuario.SetActive(false);
+        elevador.getUsuario.getGameObjectUsuario.SetActive(true);
+    }
+
 }

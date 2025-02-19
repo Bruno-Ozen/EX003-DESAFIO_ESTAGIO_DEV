@@ -46,12 +46,14 @@ public class Usuario
         this.subir_ou_descer[0] = true;
         enviarEventoAoBotaoSobeDesce(andar, elevador);
         this.subir_ou_descer[0] = false;
+        Debug.Log("CAIU AQUI 2");
     }
 
     public void enviarEventoAoBotaoSobeDesce(AndarUsuario andar, Elevador elevador)
     {
-        EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(this, null, andar.getNumero_andar, subir_ou_descer);
+        EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(this, null, andar, null, subir_ou_descer);
         andar.Manipulador_eventos_btn_sobe_desce.dispararEvento(eventoBotaoSobeDesce, elevador);
+        Debug.Log("CAIU AQUI 3");
     }
 
 }

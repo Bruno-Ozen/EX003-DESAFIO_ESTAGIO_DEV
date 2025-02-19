@@ -36,23 +36,29 @@ public class GerenciadorPredio : MonoBehaviour
                 elevador,
                 8
             );
-        usuario_dentro_elevador = GetPredio.Andar_usuario.getUsuario.getEsta_dentro_do_elevador;
-        jogo_comecou = false;
+        usuario_dentro_elevador = GetPredio.getAndar_usuario.getUsuario.getEsta_dentro_do_elevador;
+    }
+
+    private void Update()
+    {
+        GetElevador.opera_elevador();
     }
 
     public void usuarioSubir()
     {
+
         if (!jogo_comecou)
         {
+            Debug.Log("caiu aqui sim");
             jogo_comecou = true;
+            GetElevador.ativar_elevador();
         }
 
-        AndarUsuario andarUsuario = GetPredio.Andar_usuario;
+        AndarUsuario andarUsuario = GetPredio.getAndar_usuario;
         Elevador elevador = GetElevador;
-        Usuario usuario = GetPredio.Andar_usuario.getUsuario;
+        Usuario usuario = andarUsuario.getUsuario;
 
         usuario.pedir_para_subir(andarUsuario, elevador);
-
     }
 
     public List<Transform> pega_filhos_diretos(Transform transform)
