@@ -7,17 +7,12 @@ public class AndarUsuario : Andar
     private Usuario usuario;
     private MEBotaoSobeDesce manipulador_eventos_btn_sobe_desce;
 
-    public AndarUsuario(int numero_andar, Transform[] ambiente_andar) : base(numero_andar, ambiente_andar)
+    public AndarUsuario(GameObject andar, int numero_andar, List<Transform> ambiente_andar) : base(andar, numero_andar, ambiente_andar)
     {
-        manipulador_eventos_btn_sobe_desce = new MEBotaoSobeDesce();
-        this.usuario = new Usuario(ambiente_andar[3].gameObject.GetComponent<Transform>());
+        this.Manipulador_eventos_btn_sobe_desce = new MEBotaoSobeDesce();
+        this.usuario = new Usuario(this.getOcupantes);
     }
 
-    public void dispararEventoSobeDesce(EventoBotaoSobeDesce evento)
-    {
-        this.manipulador_eventos_btn_sobe_desce.dispararEvento(evento);
-    }
-
-    public Usuario UsuarioGet { get => usuario; }
-
+    public Usuario getUsuario { get => usuario; }
+    public MEBotaoSobeDesce Manipulador_eventos_btn_sobe_desce { get => manipulador_eventos_btn_sobe_desce; set => manipulador_eventos_btn_sobe_desce = value; }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Elevador
@@ -10,33 +11,45 @@ public class Elevador
     private Usuario usuario;
     private Morador[] moradores;
     private int tempo_espera;
-    public int andar_atual;
-    public MEPainelElevador manipulador_eventos_elevador;
+    private int andar_atual;
+    private MEPainelElevador manipulador_eventos_elevador;
+    private List<EventoBotaoSobeDesce> filaEventosSobeOuDesce;
 
-    public Elevador(Transform[] ocupantes, int tempo_espera)
+    public int getAndar_atual { get => andar_atual; set => andar_atual = value; }
+    public MEPainelElevador getManipulador_eventos_elevador { get => manipulador_eventos_elevador; set => manipulador_eventos_elevador = value; }
+    public List<EventoBotaoSobeDesce> getFilaSobeOuDesce { get => filaEventosSobeOuDesce; set => filaEventosSobeOuDesce = value; }
+    public Usuario getUsuario { get => usuario; set => usuario = value; }
+    public Morador[] getMoradores { get => moradores; set => moradores = value; }
+
+    public Elevador(GameObject elevador_obj, List<Transform> filhosElevador, int tempo_espera)
     {
-        GameObject[] filhosElevador = new GameObject[ocupantes.Length - 1];
-        for (int i = 1; i < ocupantes.Length; i++)
-        {
-            filhosElevador[i - 1] = ocupantes[i].gameObject;
-        }
+        this.elevador = elevador_obj;
+        this.getUsuario = new Usuario(filhosElevador[0].GetComponent<Transform>());
+        this.getMoradores = new Morador[4];
 
-        this.elevador = ocupantes[0].gameObject;
-        this.usuario = new Usuario(ocupantes[1].GetComponent<Transform>());
-        this.moradores = new Morador[4];
-
-        for(int i = 2; i < ocupantes.Length; i++)
+        for(int i = 1; i < filhosElevador.Count; i++)
         {
-            this.moradores[i - 2] = new Morador(ocupantes[i].GetComponent<Transform>());
+            this.getMoradores[i - 1] = new Morador(filhosElevador[i]);
         }
 
         this.tempo_espera = tempo_espera;
-        this.andar_atual = 1;
+        this.getAndar_atual = 1;
+        this.getUsuario.getGameObjectUsuario.SetActive(false);
+        foreach(Morador m in this.getMoradores)
+        {
+            m.getGameObjectMorador.SetActive(false);
+        }
+
     }
 
     public GameObject getElevador()
     {
         return elevador;
+    }
+
+    public void enfileiraEventoSobeOuDesce(EventoBotaoSobeDesce evento_sobe_ou_desce)
+    {
+
     }
 
 }

@@ -7,10 +7,10 @@ public class MEBotaoSobeDesce
 
     public MEBotaoSobeDesce()
     { 
-    
+        
     }
 
-    public void dispararEvento(EventoBotaoSobeDesce evento)
+    public void dispararEvento(EventoBotaoSobeDesce evento, Elevador elevador)
     {
 
     }

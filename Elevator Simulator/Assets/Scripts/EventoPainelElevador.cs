@@ -10,13 +10,17 @@ public class EventoPainelElevador
     private Usuario usuario_disparou;
     private Morador morador_disparou;
     private List<int> andares_desejados;
+    private Boolean evento_concluido;
 
     public EventoPainelElevador(Usuario usuario_disparou, Morador morador_disparou, List<int> andares_desejados)
     {
         this.usuario_disparou = usuario_disparou;
         this.morador_disparou = morador_disparou;
         this.andares_desejados = andares_desejados;
+        this.Evento_concluido = false;
     }
+
+    public bool Evento_concluido { get => evento_concluido; set => evento_concluido = value; }
 
     public String usuario_ou_morador()
     {

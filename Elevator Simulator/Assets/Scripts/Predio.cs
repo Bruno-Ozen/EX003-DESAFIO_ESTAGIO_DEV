@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -15,24 +16,21 @@ public class Predio
     private AndarMorador[] andares_de_moradores;
     private Usuario usuario;
 
-    public Predio(Transform[] andares, Elevador elevador, int qtd_max_moradores)
+    public Predio(GameObject predio_obj, List<Transform> filhosPredio, Elevador elevador, int qtd_max_moradores)
     {
-        GameObject[] filhosPredio = new GameObject[andares.Length - 1];
-        for (int i = 1; i < andares.Length; i++)
-        {
-            filhosPredio[i - 1] = andares[i].gameObject;
-        }
-
         // Montando cada andar
-        AndarUsuario andar_usuario_inst = new AndarUsuario(1, filhosPredio[0].GetComponentsInChildren<Transform>());
-        AndarMorador[] andares_moradores_inst = new AndarMorador[filhosPredio.Length - 1];
-        for(int i = 1; i < filhosPredio.Length; i++){
-            andares_moradores_inst[i] = new AndarMorador(i + 1, filhosPredio[i].GetComponentsInChildren<Transform>());
+        this.predio = predio_obj;
+        AndarUsuario andar_usuario_inst = new AndarUsuario(filhosPredio[0].gameObject, 1, pega_filhos_diretos(filhosPredio[0]));
+        AndarMorador[] andares_moradores = new AndarMorador[filhosPredio.Count - 1];
+
+        for (int i = 1; i < filhosPredio.Count; i++)
+        {
+            andares_moradores[i - 1] = new AndarMorador(filhosPredio[i].gameObject, 1, pega_filhos_diretos(filhosPredio[i]));
         }
 
-        this.Andares_de_moradores = andares_moradores_inst;
+        this.andar_usuario = andar_usuario_inst;
+        this.Andares_de_moradores = andares_moradores;
         this.Elevador = elevador;
-        this.Predio = andares[0].gameObject;
         this.Qtd_max_moradores = qtd_max_moradores;
         this.Qtd_andares = this.Andares_de_moradores.Length + 1;
     }
@@ -45,4 +43,17 @@ public class Predio
     public AndarUsuario Andar_usuario { get => andar_usuario; set => andar_usuario = value; }
     public AndarMorador[] Andares_de_moradores { get => andares_de_moradores; set => andares_de_moradores = value; }
     public Usuario Usuario { get => usuario; set => usuario = value; }
+
+    public List<Transform> pega_filhos_diretos(Transform transform)
+    {
+        List<Transform> filhos_transform = new List<Transform>();
+        foreach (Transform filho in transform)
+        {
+            filhos_transform.Add(filho);
+        }
+
+        return filhos_transform;
+
+    }
+
 }

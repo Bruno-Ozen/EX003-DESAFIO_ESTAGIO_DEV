@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,32 +10,61 @@ public class GerenciadorPredio : MonoBehaviour
     // COMPONENTES DA UNITY
     [SerializeField] private GameObject elevador_obj;
     [SerializeField] private GameObject predio_obj;
+    private Boolean usuario_dentro_elevador;
+    private Elevador elevador;
+    private Predio predio;
+    public Boolean jogo_comecou;
 
-    Predio predio;
+    public Elevador GetElevador { get => elevador; set => elevador = value; }
+    public Predio GetPredio { get => predio; set => predio = value; }
 
     void Awake()
     {
         // Montando o prédio
         // 1: Elevador
-        Elevador elevador = new Elevador(
-                elevador_obj.GetComponentsInChildren<Transform>(),
+
+        GetElevador = new Elevador(
+                elevador_obj,
+                pega_filhos_diretos(elevador_obj.transform),
                 5
             );
 
         // 2: Prédio
-        predio = new Predio(predio_obj.GetComponentsInChildren<Transform>(),
+        GetPredio = new Predio(
+                predio_obj,
+                pega_filhos_diretos(predio_obj.transform),
                 elevador,
                 8
             );
-        
+        usuario_dentro_elevador = GetPredio.Andar_usuario.getUsuario.getEsta_dentro_do_elevador;
+        jogo_comecou = false;
     }
 
     public void usuarioSubir()
     {
-        AndarUsuario andarUsuario = predio.Andar_usuario;
-        Usuario usuario = predio.Andar_usuario.UsuarioGet;
+        if (!jogo_comecou)
+        {
+            jogo_comecou = true;
+        }
 
-        usuario.pedir_para_subir(andarUsuario);
+        AndarUsuario andarUsuario = GetPredio.Andar_usuario;
+        Elevador elevador = GetElevador;
+        Usuario usuario = GetPredio.Andar_usuario.getUsuario;
+
+        usuario.pedir_para_subir(andarUsuario, elevador);
+
+    }
+
+    public List<Transform> pega_filhos_diretos(Transform transform)
+    {
+        List<Transform> filhos_transform = new List<Transform>();
+        foreach (Transform filho in transform)
+        {
+            filhos_transform.Add(filho);
+        }
+
+        return filhos_transform;
+
     }
     
 }

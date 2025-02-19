@@ -6,45 +6,52 @@ using UnityEngine;
 public class Usuario
 {
 
-    private GameObject usuario { get; set; }
+    private GameObject usuario;
 
-    private List<int> andares_desejados {  get; set; }
+    private List<int> andares_desejados;
+    public bool getEsta_dentro_do_elevador { get => esta_dentro_do_elevador; set => esta_dentro_do_elevador = value; }
+    public List<int> getAndares_desejados { get => andares_desejados; set => andares_desejados = value; }
+    public GameObject getGameObjectUsuario { get => usuario; set => usuario = value; }
 
     // Se essa variável for true, então ele está dentro. Senão, o Usuário está fora, no 1o andar
     private Boolean esta_dentro_do_elevador;
-    private Boolean subir;
+    private Boolean[] subir_ou_descer;
 
     public Usuario(Transform usuario)
     {
-        this.andares_desejados = new List<int>();
-        this.usuario = usuario.gameObject.GetComponent<GameObject>();
-        this.esta_dentro_do_elevador = false;
+        this.getAndares_desejados = new List<int>();
+        this.getGameObjectUsuario = usuario.gameObject;
+        this.getEsta_dentro_do_elevador = false;
+        this.subir_ou_descer = new Boolean[2];
+        this.subir_ou_descer[0] = false;
+        this.subir_ou_descer[1] = false;
     }
 
     public void escolher_andar(int numero_andar)
     {
-        if (esta_dentro_do_elevador)
+        if (getEsta_dentro_do_elevador)
         {
-            this.andares_desejados.Add(numero_andar);
+            this.getAndares_desejados.Add(numero_andar);
         }
     }
 
-    public void enviarEventoAoPainelElevador()
+    public void enviarEventoAoPainelElevador(Elevador elevador)
     {
-        EventoPainelElevador eventoPainelElevador = new EventoPainelElevador(this, null, this.andares_desejados);
-
+        EventoPainelElevador eventoPainelElevador = new EventoPainelElevador(this, null, this.getAndares_desejados);
+        elevador.getManipulador_eventos_elevador.dispararEvento(eventoPainelElevador);
     }
 
-    public void pedir_para_subir(AndarUsuario andar)
+    public void pedir_para_subir(AndarUsuario andar, Elevador elevador)
     {
-        this.subir = true;
-        enviarEventoAoBotaoSobeDesce(andar);
+        this.subir_ou_descer[0] = true;
+        enviarEventoAoBotaoSobeDesce(andar, elevador);
+        this.subir_ou_descer[0] = false;
     }
 
-    public void enviarEventoAoBotaoSobeDesce(AndarUsuario andar)
+    public void enviarEventoAoBotaoSobeDesce(AndarUsuario andar, Elevador elevador)
     {
-        EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(this, null, subir);
-        andar.dispararEventoSobeDesce(eventoBotaoSobeDesce);
+        EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(this, null, andar.getNumero_andar, subir_ou_descer);
+        andar.Manipulador_eventos_btn_sobe_desce.dispararEvento(eventoBotaoSobeDesce, elevador);
     }
 
 }

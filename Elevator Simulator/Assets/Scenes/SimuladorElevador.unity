@@ -672,7 +672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &336170745
 Transform:
   m_ObjectHideFlags: 0
@@ -687,8 +687,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 254025226}
-  - {fileID: 780546388}
   - {fileID: 1748101282}
+  - {fileID: 780546388}
   - {fileID: 1116420019}
   m_Father: {fileID: 1769766579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2831,7 +2831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1091536802
 Transform:
   m_ObjectHideFlags: 0
@@ -3306,7 +3306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1272605371
 Transform:
   m_ObjectHideFlags: 0
@@ -3666,7 +3666,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.58684635}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 0.16800213}
+  m_AnchoredPosition: {x: 0.0000076293945, y: 0.16800117}
   m_SizeDelta: {x: -0.43, y: -0.336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346910015
@@ -3842,6 +3842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elevador_obj: {fileID: 1808027995}
   predio_obj: {fileID: 1873046936}
+  jogo_comecou: 0
 --- !u!1 &1410245043
 GameObject:
   m_ObjectHideFlags: 0
@@ -3858,7 +3859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1410245044
 Transform:
   m_ObjectHideFlags: 0
@@ -4316,7 +4317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1614127553
 Transform:
   m_ObjectHideFlags: 0
@@ -4331,8 +4332,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 687249074}
-  - {fileID: 1064750661}
   - {fileID: 163397350}
+  - {fileID: 1064750661}
   - {fileID: 1145145687}
   m_Father: {fileID: 1365247964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5873,9 +5874,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1379689414}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
-        m_Mode: 5
+        m_TargetAssemblyTypeName: GerenciadorPredio, Assembly-CSharp
+        m_MethodName: usuarioSubir
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5937,7 +5938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2075880578
 Transform:
   m_ObjectHideFlags: 0
@@ -5952,8 +5953,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1589144630}
-  - {fileID: 1672994158}
   - {fileID: 1895092511}
+  - {fileID: 1672994158}
   - {fileID: 1204575567}
   m_Father: {fileID: 711089814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5973,7 +5974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2094414662
 Transform:
   m_ObjectHideFlags: 0
