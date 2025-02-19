@@ -9,7 +9,7 @@ public class EventoBotaoSobeDesce
     private Morador morador_que_disparou;
     private AndarUsuario andarUsuario;
     private AndarMorador andarMorador;
-    // Essa variável deverá ser um vetor de 2 posições, que poderá ser:
+    // Essa variï¿½vel deverï¿½ ser um vetor de 2 posiï¿½ï¿½es, que poderï¿½ ser:
     // [true, false] -> apenas subir
     // [false, true] -> apenas descer
     // [true, true] -> subir e descer

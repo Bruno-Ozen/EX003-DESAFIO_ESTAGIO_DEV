@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Elevador
@@ -16,6 +15,7 @@ public class Elevador
     private int andar_atual;
     private MEPainelElevador manipulador_eventos_elevador;
     private FilaSobeOuDesce filaEventosSobeOuDesce;
+    private FilaPainelElevador filaPainelElevador;
 
     public int getAndar_atual { get => andar_atual; set => andar_atual = value; }
     public MEPainelElevador getManipulador_eventos_elevador { get => manipulador_eventos_elevador; set => manipulador_eventos_elevador = value; }
@@ -24,15 +24,14 @@ public class Elevador
     public Morador[] getMoradores { get => moradores; set => moradores = value; }
     public FilaSobeOuDesce getFilaEventosSobeOuDesce { get => filaEventosSobeOuDesce; set => filaEventosSobeOuDesce = value; }
     public bool getAtivo { get => ativo; set => ativo = value; }
+    public FilaPainelElevador getFilaPainelElevador { get => filaPainelElevador; set => filaPainelElevador = value; }
 
-    public void opera_elevador()
+    public void opera_elevador(AudioSource som_elevador)
     {
         if (ativo)
         {
-            Debug.Log("CAIU AQUI 5");
             if (!getFilaEventosSobeOuDesce.esta_vazia())
             {
-                Debug.Log("CAIU AQUI 6");
                 EventoBotaoSobeDesce eventoSobeDesce = getFilaEventosSobeOuDesce.desenfileira();
                 if (eventoSobeDesce.getFoi_um_morador)
                 {
@@ -44,11 +43,9 @@ public class Elevador
                 }
                 else
                 {
-                    Debug.Log("CAIU AQUI 7");
-                    Debug.Log(getAndar_atual);
                     if (getAndar_atual == eventoSobeDesce.getAndarUsuario.getNumero_andar)
                     {
-                        Debug.Log("CAIU AQUI 8");
+                        som_elevador.Play();
                         eventoSobeDesce.getAndarUsuario.abrePorta();
                         eventoSobeDesce.getAndarUsuario.usuario_entrar(this);
                     }
@@ -90,6 +87,11 @@ public class Elevador
     public void enfileiraEventoSobeOuDesce(EventoBotaoSobeDesce evento_sobe_ou_desce)
     {
         this.getFilaEventosSobeOuDesce.enfileira(evento_sobe_ou_desce);
+    }
+
+    public void enfileiraEventoPainelElevador(EventoPainelElevador evento_painel_elevador)
+    {
+        this.getFilaPainelElevador.enfileira(evento_painel_elevador);
     }
 
     public void ativar_elevador()

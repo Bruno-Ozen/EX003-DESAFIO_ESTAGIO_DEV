@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,9 @@ using UnityEngine;
 public class MEPainelElevador : MonoBehaviour
 {
 
-    void Start()
+    public void dispararEvento(EventoPainelElevador evento, Elevador elevador)
     {
-        
-    }
-
-    public void dispararEvento(EventoPainelElevador evento)
-    {
-
+        elevador.enfileiraEventoPainelElevador(evento);
     }
 
 }

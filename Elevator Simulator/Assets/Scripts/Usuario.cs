@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Usuario
 {
-
     private GameObject usuario;
 
     private List<int> andares_desejados;
@@ -13,7 +12,7 @@ public class Usuario
     public List<int> getAndares_desejados { get => andares_desejados; set => andares_desejados = value; }
     public GameObject getGameObjectUsuario { get => usuario; set => usuario = value; }
 
-    // Se essa variável for true, então ele está dentro. Senão, o Usuário está fora, no 1o andar
+    // Se essa variï¿½vel for true, entï¿½o ele estï¿½ dentro. Senï¿½o, o Usuï¿½rio estï¿½ fora, no 1o andar
     private Boolean esta_dentro_do_elevador;
     private Boolean[] subir_ou_descer;
 
@@ -38,7 +37,7 @@ public class Usuario
     public void enviarEventoAoPainelElevador(Elevador elevador)
     {
         EventoPainelElevador eventoPainelElevador = new EventoPainelElevador(this, null, this.getAndares_desejados);
-        elevador.getManipulador_eventos_elevador.dispararEvento(eventoPainelElevador);
+        elevador.getManipulador_eventos_elevador.dispararEvento(eventoPainelElevador, elevador);
     }
 
     public void pedir_para_subir(AndarUsuario andar, Elevador elevador)
@@ -46,14 +45,12 @@ public class Usuario
         this.subir_ou_descer[0] = true;
         enviarEventoAoBotaoSobeDesce(andar, elevador);
         this.subir_ou_descer[0] = false;
-        Debug.Log("CAIU AQUI 2");
     }
 
     public void enviarEventoAoBotaoSobeDesce(AndarUsuario andar, Elevador elevador)
     {
         EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(this, null, andar, null, subir_ou_descer);
         andar.Manipulador_eventos_btn_sobe_desce.dispararEvento(eventoBotaoSobeDesce, elevador);
-        Debug.Log("CAIU AQUI 3");
     }
 
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Morador
@@ -12,7 +11,7 @@ public class Morador
     private Boolean[] subir_ou_descer;
     private Boolean e_oProximo;
 
-    // Se essa variável for true, então ele está dentro. Senão, o Usuário está fora, no 1o andar
+    // Se essa variï¿½vel for true, entï¿½o ele estï¿½ dentro. Senï¿½o, o Usuï¿½rio estï¿½ fora, no 1o andar
     private Boolean esta_dentro_do_elevador;
 
     public int getAndar_atual { get => andar_atual; set => andar_atual = value; }

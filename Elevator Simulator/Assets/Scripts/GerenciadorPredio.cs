@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GerenciadorPredio : MonoBehaviour
 {
     // COMPONENTES DA UNITY
     [SerializeField] private GameObject elevador_obj;
     [SerializeField] private GameObject predio_obj;
+    [SerializeField] private Image botao_subir_usuario;
+    [SerializeField] private Image painel_elevador;
+    [SerializeField] private AudioSource som_elevador_chegou;
     private Boolean usuario_dentro_elevador;
     private Elevador elevador;
     private Predio predio;
@@ -20,16 +22,17 @@ public class GerenciadorPredio : MonoBehaviour
 
     void Awake()
     {
-        // Montando o prédio
+        // Montando o prï¿½dio
         // 1: Elevador
-
+        botao_subir_usuario.gameObject.SetActive(true);
+        painel_elevador.gameObject.SetActive(false);
         GetElevador = new Elevador(
                 elevador_obj,
                 pega_filhos_diretos(elevador_obj.transform),
                 5
             );
 
-        // 2: Prédio
+        // 2: Prï¿½dio
         GetPredio = new Predio(
                 predio_obj,
                 pega_filhos_diretos(predio_obj.transform),
@@ -41,7 +44,17 @@ public class GerenciadorPredio : MonoBehaviour
 
     private void Update()
     {
-        GetElevador.opera_elevador();
+        if (!GetPredio.getAndar_usuario.getUsuario.getEsta_dentro_do_elevador)
+        {
+            botao_subir_usuario.gameObject.SetActive(true);
+            painel_elevador.gameObject.SetActive(false);
+        }
+        else
+        {
+            botao_subir_usuario.gameObject.SetActive(false);
+            painel_elevador.gameObject.SetActive(true);
+        }
+        GetElevador.opera_elevador(som_elevador_chegou);
     }
 
     public void usuarioSubir()
@@ -49,7 +62,6 @@ public class GerenciadorPredio : MonoBehaviour
 
         if (!jogo_comecou)
         {
-            Debug.Log("caiu aqui sim");
             jogo_comecou = true;
             GetElevador.ativar_elevador();
         }
@@ -59,6 +71,26 @@ public class GerenciadorPredio : MonoBehaviour
         Usuario usuario = andarUsuario.getUsuario;
 
         usuario.pedir_para_subir(andarUsuario, elevador);
+    }
+
+    public void usuarioIrParaO1oAndar()
+    {
+        GetPredio.getAndar_usuario.getUsuario.escolher_andar(1);
+    }
+
+    public void usuarioIrParaO2oAndar()
+    {
+        GetPredio.getAndar_usuario.getUsuario.escolher_andar(2);
+    }
+
+    public void usuarioIrParaO3oAndar()
+    {
+        GetPredio.getAndar_usuario.getUsuario.escolher_andar(3);
+    }
+
+    public void usuarioIrParaO4oAndar()
+    {
+        GetPredio.getAndar_usuario.getUsuario.escolher_andar(4);
     }
 
     public List<Transform> pega_filhos_diretos(Transform transform)

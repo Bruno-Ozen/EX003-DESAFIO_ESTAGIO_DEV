@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class AndarUsuario : Andar
 
     public void usuario_entrar(Elevador elevador)
     {
+        this.usuario.getEsta_dentro_do_elevador = true;
         this.usuario.getGameObjectUsuario.SetActive(false);
         elevador.getUsuario.getGameObjectUsuario.SetActive(true);
     }
