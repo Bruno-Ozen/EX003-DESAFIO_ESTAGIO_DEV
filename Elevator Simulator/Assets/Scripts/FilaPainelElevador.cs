@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FilaPainelElevador : MonoBehaviour
+public class FilaPainelElevador
 {
     private List<EventoPainelElevador> filaEventosPainelElevador;
     int ponteiro_do_primeiro;
@@ -21,6 +21,10 @@ public class FilaPainelElevador : MonoBehaviour
         {
             this.getFilaPainelElevador.Add(evento_painel_elevador);
             this.ponteiro_do_primeiro = 0;
+        }
+        else
+        {
+            this.getFilaPainelElevador.Add(evento_painel_elevador);
         }
 
     }

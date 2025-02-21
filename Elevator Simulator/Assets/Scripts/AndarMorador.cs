@@ -28,4 +28,9 @@ public class AndarMorador : Andar
 
     }
 
+    public void morador_entrar(Elevador elevador)
+    {
+        
+    }
+
 }

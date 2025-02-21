@@ -24,4 +24,11 @@ public class AndarUsuario : Andar
         elevador.getUsuario.getGameObjectUsuario.SetActive(true);
     }
 
+    public void usuario_sair(Elevador elevador)
+    {
+        this.usuario.getEsta_dentro_do_elevador = false;
+        this.usuario.getGameObjectUsuario.SetActive(true);
+        elevador.getUsuario.getGameObjectUsuario.SetActive(false);
+    }
+
 }

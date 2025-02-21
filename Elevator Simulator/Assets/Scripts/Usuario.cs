@@ -11,13 +11,15 @@ public class Usuario
     public bool getEsta_dentro_do_elevador { get => esta_dentro_do_elevador; set => esta_dentro_do_elevador = value; }
     public List<int> getAndares_desejados { get => andares_desejados; set => andares_desejados = value; }
     public GameObject getGameObjectUsuario { get => usuario; set => usuario = value; }
+    public bool getDisparou_evento_painel_elevador { get => disparou_evento_painel_elevador; set => disparou_evento_painel_elevador = value; }
 
     // Se essa vari�vel for true, ent�o ele est� dentro. Sen�o, o Usu�rio est� fora, no 1o andar
     private Boolean esta_dentro_do_elevador;
     private Boolean[] subir_ou_descer;
-
+    private Boolean disparou_evento_painel_elevador;
     public Usuario(Transform usuario)
     {
+        this.getDisparou_evento_painel_elevador = false;
         this.getAndares_desejados = new List<int>();
         this.getGameObjectUsuario = usuario.gameObject;
         this.getEsta_dentro_do_elevador = false;
@@ -30,14 +32,21 @@ public class Usuario
     {
         if (getEsta_dentro_do_elevador)
         {
-            this.getAndares_desejados.Add(numero_andar);
+            if (numero_andar != 1)
+            {
+                this.getAndares_desejados.Add(numero_andar);
+            }
         }
     }
 
     public void enviarEventoAoPainelElevador(Elevador elevador)
     {
-        EventoPainelElevador eventoPainelElevador = new EventoPainelElevador(this, null, this.getAndares_desejados);
-        elevador.getManipulador_eventos_elevador.dispararEvento(eventoPainelElevador, elevador);
+        if (this.andares_desejados.Count > 0)
+        {
+            EventoPainelElevador eventoPainelElevador = new EventoPainelElevador(this, null, this.getAndares_desejados);
+            elevador.getManipulador_eventos_elevador.dispararEvento(eventoPainelElevador, elevador);
+            this.disparou_evento_painel_elevador = true;
+        }
     }
 
     public void pedir_para_subir(AndarUsuario andar, Elevador elevador)

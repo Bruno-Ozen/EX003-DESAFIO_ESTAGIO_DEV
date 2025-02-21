@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MEPainelElevador : MonoBehaviour
+public class MEPainelElevador
 {
 
     public void dispararEvento(EventoPainelElevador evento, Elevador elevador)

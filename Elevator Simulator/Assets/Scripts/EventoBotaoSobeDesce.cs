@@ -25,7 +25,7 @@ public class EventoBotaoSobeDesce
         this.andarUsuario = andar_usuario;
         this.getAndarMorador = andar_morador;
         this.Subir_ou_descer = subir_ou_descer;
-
+        this.evento_concluido = false;
         if (this.usuario_que_disparou != null && this.morador_que_disparou == null)
         {
             getFoi_um_morador = false;
@@ -38,29 +38,10 @@ public class EventoBotaoSobeDesce
     }
 
     public bool[] Subir_ou_descer { get => subir_ou_descer; set => subir_ou_descer = value; }
-    public bool Evento_concluido { get => evento_concluido; set => evento_concluido = value; }
+    public bool oEvento_foi_concluido { get => evento_concluido; set => evento_concluido = value; }
     public AndarUsuario getAndarUsuario { get => andarUsuario; set => andarUsuario = value; }
     public AndarMorador getAndarMorador { get => andarMorador; set => andarMorador = value; }
     public bool getFoi_um_morador { get => foi_um_morador; set => foi_um_morador = value; }
-
-    public String usuario_ou_morador()
-    {
-        String quem_disparou = "ninguem";
-
-        if (usuario_que_disparou != null ^ morador_que_disparou != null)
-        {
-            if (usuario_que_disparou != null)
-            {
-                quem_disparou = "usuario";
-            }
-            else if (morador_que_disparou != null)
-            {
-                quem_disparou = "morador";
-            }
-        }
-
-        return quem_disparou;
-    }
 
     public String sobe_desce_ou_ambos()
     {
