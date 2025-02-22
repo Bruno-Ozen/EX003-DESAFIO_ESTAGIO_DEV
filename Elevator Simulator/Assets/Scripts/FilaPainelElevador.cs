@@ -24,7 +24,25 @@ public class FilaPainelElevador
         }
         else
         {
-            this.getFilaPainelElevador.Add(evento_painel_elevador);
+            if (evento_painel_elevador.getFoi_um_morador)
+            {
+                this.getFilaPainelElevador.Add(evento_painel_elevador);
+            }
+            else
+            {
+                int i = 0;
+
+                while(i < (this.filaEventosPainelElevador.Count - 1))
+                {
+                    if (!this.filaEventosPainelElevador[i].getFoi_um_morador)
+                    {
+                        i++;
+                    }
+                }
+
+                this.getFilaPainelElevador.Insert(ponteiro_do_primeiro + i, evento_painel_elevador);
+            }
+
         }
 
     }
@@ -33,12 +51,12 @@ public class FilaPainelElevador
     {
         EventoPainelElevador desenfileirado = this.filaEventosPainelElevador[ponteiro_do_primeiro];
 
-        if (ponteiro_do_primeiro == (getFilaPainelElevador.Count - 1))
+        if (ponteiro_do_primeiro == (getFilaPainelElevador.Count - 1) && ponteiro_do_primeiro != 0)
         {
             ponteiro_do_primeiro = 0;
             getFilaPainelElevador.Clear();
         }
-        else if (ponteiro_do_primeiro < getFilaPainelElevador.Count)
+        else if (ponteiro_do_primeiro < (getFilaPainelElevador.Count - 1))
         {
             ponteiro_do_primeiro++;
         }

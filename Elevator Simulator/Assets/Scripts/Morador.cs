@@ -36,11 +36,12 @@ public class Morador
         this.getAndar_desejado = numero_andar;
     }
 
-    public void enviarEventoAoPainelElevador()
+    public void enviarEventoAoPainelElevador(AndarMorador andar, Elevador elevador)
     {
         List<int> andares_desejados = new List<int>();
         andares_desejados.Add(this.getAndar_desejado);
-        EventoPainelElevador eventoPainelElevador = new EventoPainelElevador(null, this, andares_desejados);
+        EventoPainelElevador eventoPainelElevador = new EventoPainelElevador(null, this, null, andar, andares_desejados);
+        elevador.getManipulador_eventos_elevador.dispararEvento(eventoPainelElevador, elevador);
     }
 
     public void pedir_para_subir()
@@ -56,7 +57,7 @@ public class Morador
     public void enviarEventoAoBotaoSobeDesce(AndarMorador andar, Elevador elevador)
     {
         EventoBotaoSobeDesce eventoBotaoSobeDesce = new EventoBotaoSobeDesce(null, this, null, andar, subir_ou_descer);
-        andar.Manipulador_eventos_btn_sobe_desce.dispararEvento(eventoBotaoSobeDesce, elevador);
+        andar.getManipulador_eventos_btn_sobe_desce.dispararEvento(eventoBotaoSobeDesce, elevador);
         this.subir_ou_descer[0] = false;
         this.subir_ou_descer[1] = false;
     }

@@ -27,10 +27,10 @@ public class Predio
         }
 
         this.andar_usuario = andar_usuario_inst;
-        this.Andares_de_moradores = andares_moradores;
+        this.getAndares_de_moradores = andares_moradores;
         this.Elevador = elevador;
         this.getQtd_max_moradores = qtd_max_moradores;
-        this.getQtd_andares = this.Andares_de_moradores.Length + 1;
+        this.getQtd_andares = this.getAndares_de_moradores.Length + 1;
     }
 
     public int getQtd_andares { get => qtd_andares; set => qtd_andares = value; }
@@ -38,8 +38,8 @@ public class Predio
     public Elevador Elevador { get => elevador; set => elevador = value; }
     public int getQtd_max_moradores { get => qtd_max_moradores; set => qtd_max_moradores = value; }
     public AndarUsuario getAndar_usuario { get => andar_usuario; set => andar_usuario = value; }
-    public AndarMorador[] Andares_de_moradores { get => andares_de_moradores; set => andares_de_moradores = value; }
     public Usuario Usuario { get => usuario; set => usuario = value; }
+    public AndarMorador[] getAndares_de_moradores { get => andares_de_moradores; set => andares_de_moradores = value; }
 
     public List<Transform> pega_filhos_diretos(Transform transform)
     {

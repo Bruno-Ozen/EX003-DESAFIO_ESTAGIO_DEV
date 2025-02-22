@@ -36,18 +36,12 @@ public class Elevador
     public EventoPainelElevador getUltimo_evento_PainelElevador_desenfileirado { get => ultimo_evento_PainelElevador_desenfileirado; set => ultimo_evento_PainelElevador_desenfileirado = value; }
     public Animator getAnimador_elevador { get => animador_elevador; set => animador_elevador = value; }
     public GameObject getGameobjectElevador { get => elevador; set => elevador = value; }
-    public Vector3[] getPosicoes_andares { get => posicoes_andares; set => posicoes_andares = value; }
+    //public Vector3[] getPosicoes_andares { get => posicoes_andares; set => posicoes_andares = value; }
 
-    private Vector3[] posicoes_andares;
+    //private Vector3[] posicoes_andares;
 
     public Elevador(GameObject elevador_obj, List<Transform> filhosElevador, int tempo_espera)
     {
-        this.getPosicoes_andares = new Vector3[4];
-        this.getPosicoes_andares[0] = new Vector3(4.0197f, -7.1652f, 0f);
-        this.getPosicoes_andares[1] = new Vector3(4.0197f, -1.95f, 0f);
-        this.getPosicoes_andares[2] = new Vector3(4.0197f, 3.1f, 0f);
-        this.getPosicoes_andares[3] = new Vector3(4.0197f, -7.1652f, 0f);
-
         this.getFilaPainelElevador = new FilaPainelElevador();
         this.getAnimador_elevador = elevador_obj.GetComponent<Animator>();
         this.animador_elevador.SetBool("parar", true);

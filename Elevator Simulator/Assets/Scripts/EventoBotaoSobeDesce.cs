@@ -24,7 +24,7 @@ public class EventoBotaoSobeDesce
         this.morador_que_disparou = morador_disparou;
         this.andarUsuario = andar_usuario;
         this.getAndarMorador = andar_morador;
-        this.Subir_ou_descer = subir_ou_descer;
+        this.getSubir_ou_descer = subir_ou_descer;
         this.evento_concluido = false;
         if (this.usuario_que_disparou != null && this.morador_que_disparou == null)
         {
@@ -37,8 +37,8 @@ public class EventoBotaoSobeDesce
 
     }
 
-    public bool[] Subir_ou_descer { get => subir_ou_descer; set => subir_ou_descer = value; }
-    public bool oEvento_foi_concluido { get => evento_concluido; set => evento_concluido = value; }
+    public bool[] getSubir_ou_descer { get => subir_ou_descer; set => subir_ou_descer = value; }
+    public bool getEvento_foi_concluido { get => evento_concluido; set => evento_concluido = value; }
     public AndarUsuario getAndarUsuario { get => andarUsuario; set => andarUsuario = value; }
     public AndarMorador getAndarMorador { get => andarMorador; set => andarMorador = value; }
     public bool getFoi_um_morador { get => foi_um_morador; set => foi_um_morador = value; }
@@ -47,15 +47,15 @@ public class EventoBotaoSobeDesce
     {
         String resposta = "";
 
-        if (Subir_ou_descer[0] == true && Subir_ou_descer[1] == false)
+        if (getSubir_ou_descer[0] == true && getSubir_ou_descer[1] == false)
         {
             resposta = "sobe";
         }
-        else if(Subir_ou_descer[0] == false && Subir_ou_descer[1] == true)
+        else if(getSubir_ou_descer[0] == false && getSubir_ou_descer[1] == true)
         {
             resposta = "desce";
         }
-        else if (Subir_ou_descer[0] == true && Subir_ou_descer[1] == true)
+        else if (getSubir_ou_descer[0] == true && getSubir_ou_descer[1] == true)
         {
             resposta = "ambos";
         }

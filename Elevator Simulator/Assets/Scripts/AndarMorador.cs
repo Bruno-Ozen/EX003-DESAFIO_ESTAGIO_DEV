@@ -14,7 +14,7 @@ public class AndarMorador : Andar
         fila = new FilaAndar(numero_andar, pega_filhos_diretos(this.getOcupantes));
     }
 
-    public MEBotaoSobeDesce Manipulador_eventos_btn_sobe_desce { get => manipulador_eventos_btn_sobe_desce; set => manipulador_eventos_btn_sobe_desce = value; }
+    public MEBotaoSobeDesce getManipulador_eventos_btn_sobe_desce { get => manipulador_eventos_btn_sobe_desce; set => manipulador_eventos_btn_sobe_desce = value; }
 
     public List<Transform> pega_filhos_diretos(Transform transform)
     {

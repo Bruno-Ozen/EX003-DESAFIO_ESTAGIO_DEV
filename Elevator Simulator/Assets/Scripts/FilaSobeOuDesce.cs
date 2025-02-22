@@ -37,11 +37,11 @@ public class FilaSobeOuDesce
     {
         EventoBotaoSobeDesce desenfileirado = this.filaEventosSobeOuDesce[ponteiro_do_primeiro];
         
-        if(ponteiro_do_primeiro == (getFilaEventosSobeOuDesce.Count - 1))
+        if(ponteiro_do_primeiro == (getFilaEventosSobeOuDesce.Count - 1) && ponteiro_do_primeiro != 0)
         {
             ponteiro_do_primeiro = 0;
             getFilaEventosSobeOuDesce.Clear();
-        } else if (ponteiro_do_primeiro < getFilaEventosSobeOuDesce.Count)
+        } else if (ponteiro_do_primeiro < (getFilaEventosSobeOuDesce.Count - 1))
         {
             ponteiro_do_primeiro++;
         }
