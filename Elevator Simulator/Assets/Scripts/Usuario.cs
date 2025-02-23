@@ -35,7 +35,14 @@ public class Usuario
     {
         if (getEsta_dentro_do_elevador)
         {
-            if (numero_andar != 1)
+            if (getAndares_desejados.Count == 0)
+            {
+                if (numero_andar != 1)
+                {
+                    this.getAndares_desejados.Add(numero_andar);
+                }
+            }
+            else
             {
                 this.getAndares_desejados.Add(numero_andar);
             }

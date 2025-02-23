@@ -54,4 +54,9 @@ public class FilaSobeOuDesce
         return this.getFilaEventosSobeOuDesce.Count == 0;
     }
 
+    public Boolean nao_esta_vazia()
+    {
+        return !this.esta_vazia();
+    }
+
 }

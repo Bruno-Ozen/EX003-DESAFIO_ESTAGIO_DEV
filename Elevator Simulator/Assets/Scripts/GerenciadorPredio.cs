@@ -70,7 +70,7 @@ public class GerenciadorPredio : MonoBehaviour
 
         if (GetElevador.getAtivo)
         {
-           // StartCoroutine(passo_1());
+            // StartCoroutine(passo_1());
 
         }
 
@@ -78,127 +78,149 @@ public class GerenciadorPredio : MonoBehaviour
 
     // MÉTODOS DE CADA PASSO DO ELEVADOR ---------------------------------------------------------------------------
 
-    public IEnumerator passo_1()
+    public IEnumerator opera_elevador()
     {
-        // PASSO 1: ABRE O ELEVADOR PARA O USUÁRIO. AQUI, O ELEVADOR ESTÁ NO 1o ANDAR
-        if (!GetElevador.getFilaEventosSobeOuDesce.esta_vazia())
+        Animator animador_elevador = GetElevador.getAnimador_elevador;
+        int tempo_deslocamento_elevador = 0;
+        // Espera alguém apertar o botão sobe desce em algum andar
+        while (true)
         {
+            yield return new WaitUntil(GetElevador.getFilaEventosSobeOuDesce.nao_esta_vazia);
+
+            // PASSO 1: ABRE O ELEVADOR PARA O USUÁRIO. AQUI, O ELEVADOR ESTÁ NO 1o ANDAR
             GetElevador.getUltimo_evento_SobeDesce_desenfileirado = GetElevador.getFilaEventosSobeOuDesce.desenfileira();
-            if (GetElevador.getAndar_atual == GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.getNumero_andar)
+            if (GetElevador.getAndar_atual != GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.getNumero_andar)
             {
-                som_elevador_chegou.Play();
+                // SE O ELEVADOR NÃO ESTIVER NO ANDAR DO USUÁRIO, ENTÃO ELE SE DESLOCA ATÉ ELE
+                int numero_do_andar_desejado_atual = GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.getNumero_andar;
+                String nome_andar = "andar_" + numero_do_andar_desejado_atual.ToString();
+
+                // VAI PARA O ANDAR N
+                animador_elevador.SetBool(nome_andar, true);
+                animador_elevador.SetBool("parar", false);
+                if (numero_do_andar_desejado_atual < GetElevador.getAndar_atual)
+                {
+                    tempo_deslocamento_elevador = GetElevador.getAndar_atual - numero_do_andar_desejado_atual;
+                }
+                else if (numero_do_andar_desejado_atual > GetElevador.getAndar_atual)
+                {
+                    tempo_deslocamento_elevador = numero_do_andar_desejado_atual - GetElevador.getAndar_atual;
+                }
+
+
+                yield return new WaitForSeconds(tempo_deslocamento_elevador);
+                yield return new WaitForSeconds(GetElevador.getTempo_espera);
+                animador_elevador.SetBool(nome_andar, false);
+
+                GetElevador.getAndar_atual = numero_do_andar_desejado_atual;
                 yield return new WaitForSeconds(1);
-                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.abrePorta();
-                yield return new WaitForSeconds(1);
-                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.usuario_entrar(this.GetElevador);
-                yield return StartCoroutine(passo_2());
-                StopCoroutine(passo_1());
             }
-
-        }
-    }
-
-    public IEnumerator passo_2()
-    {
-        // PASSO 2: FECHA A PORTA DEPOIS DE 5 SEGUNDOS. SE O USUÁRIO NÃO ESCOLHER UM ANDAR PARA IR, ELE SAI DO ELEVADOR
-        yield return new WaitForSeconds(GetElevador.getTempo_espera);
-        Boolean conseguiu_enviar = GetPredio.getAndar_usuario.getUsuario.enviarEventoAoPainelElevador(GetPredio.getAndar_usuario, GetElevador);
-        if (!conseguiu_enviar)
-        {
+            som_elevador_chegou.Play();
             yield return new WaitForSeconds(1);
             GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.abrePorta();
             yield return new WaitForSeconds(1);
-            GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.usuario_sair(this.GetElevador);
-            getBtn_SubirUsuario.interactable = true;
-            foreach (Button b in getBotoes_painel_elevador)
+            GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.usuario_entrar(this.GetElevador);
+
+            // PASSO 2: FECHA A PORTA DEPOIS DE 5 SEGUNDOS. SE O USUÁRIO NÃO ESCOLHER UM ANDAR PARA IR, ELE SAI DO ELEVADOR
+            yield return new WaitForSeconds(GetElevador.getTempo_espera);
+            Boolean conseguiu_enviar = GetPredio.getAndar_usuario.getUsuario.enviarEventoAoPainelElevador(GetPredio.getAndar_usuario, GetElevador);
+            if (!conseguiu_enviar)
             {
-                b.interactable = true;
+                yield return new WaitForSeconds(1);
+                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.abrePorta();
+                yield return new WaitForSeconds(1);
+                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.usuario_sair(this.GetElevador);
+                getBtn_SubirUsuario.interactable = true;
+                foreach (Button b in getBotoes_painel_elevador)
+                {
+                    b.interactable = true;
+                }
+                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.fechaPorta();
             }
-            GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.fechaPorta();
-        }
-        else
-        {
-            GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.fechaPorta();
-            GetElevador.getUltimo_evento_PainelElevador_desenfileirado = GetElevador.getFilaPainelElevador.desenfileira();
-            StartCoroutine(passo_3());
-            StopCoroutine(passo_2());
-        }
+            else
+            {
+                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.fechaPorta();
+                yield return new WaitForSeconds(1);
+                GetElevador.getUltimo_evento_PainelElevador_desenfileirado = GetElevador.getFilaPainelElevador.desenfileira();
+                while (!GetElevador.getUltimo_evento_PainelElevador_desenfileirado.getEvento_concluido)
+                {
+                    // PASSO 3: O ELEVADOR ATENDE AOS ANDARES QUE O USUÁRIO PEDIU PARA IR. ENQUANTO TODOS NÃO FOREM ATENDIDOS, NÃO SAI DESSE MÉTODO
+                    int numero_do_andar_desejado_atual = GetElevador.getUltimo_evento_PainelElevador_desenfileirado.getNumero_do_andar_desejado_atual();
+                    String nome_andar = "andar_" + numero_do_andar_desejado_atual.ToString();
 
+                    // VAI PARA O ANDAR N
+                    animador_elevador.SetBool(nome_andar, true);
+                    animador_elevador.SetBool("parar", false);
+                    if (numero_do_andar_desejado_atual < GetElevador.getAndar_atual)
+                    {
+                        tempo_deslocamento_elevador = GetElevador.getAndar_atual - numero_do_andar_desejado_atual;
+                    }
+                    else if (numero_do_andar_desejado_atual > GetElevador.getAndar_atual)
+                    {
+                        tempo_deslocamento_elevador = numero_do_andar_desejado_atual - GetElevador.getAndar_atual;
+                    }
+                    yield return new WaitForSeconds(tempo_deslocamento_elevador);
 
+                    // PARA NO ANDAR N
+                    yield return new WaitForSeconds(1);
+                    animador_elevador.SetBool(nome_andar, false);
+                    GetElevador.getAndar_atual = numero_do_andar_desejado_atual;
+                    som_elevador_chegou.Play();
+                    yield return new WaitForSeconds(1);
+
+                    // ABRE A PORTA DO ANDAR N
+                    if (numero_do_andar_desejado_atual > 1)
+                    {
+                        GetPredio.getAndares_de_moradores[numero_do_andar_desejado_atual - 2].abrePorta();
+                    }
+                    else
+                    {
+                        GetPredio.getAndar_usuario.abrePorta();
+                    }
+                    yield return new WaitForSeconds(GetElevador.getTempo_espera);
+                    // FECHA A PORTA DO ANDAR N
+                    if (numero_do_andar_desejado_atual > 1)
+                    {
+                        GetPredio.getAndares_de_moradores[numero_do_andar_desejado_atual - 2].fechaPorta();
+                    }
+                    else
+                    {
+                        GetPredio.getAndar_usuario.fechaPorta();
+                    }
+                    yield return new WaitForSeconds(1);
+                    GetElevador.getUltimo_evento_PainelElevador_desenfileirado.atenderProximo_andar();
+                }
+
+                // PASSO 4: DEPOIS DE IR A TODOS OS ANDARES PEDIDOS PELO USUÁRIO, ELE VOLTA AO 1o ANDAR.
+
+                // VOLTANDO AO 1o ANDAR
+
+                tempo_deslocamento_elevador = GetElevador.getAndar_atual - 1;
+                animador_elevador = GetElevador.getAnimador_elevador;
+                animador_elevador.SetBool("andar_1", true);
+                animador_elevador.SetBool("parar", false);
+                yield return new WaitForSeconds(tempo_deslocamento_elevador);
+                som_elevador_chegou.Play();
+                yield return new WaitForSeconds(1);
+                animador_elevador.SetBool("andar_1", false);
+                animador_elevador.SetBool("parar", true);
+                yield return new WaitForSeconds(1);
+
+                // O USUÁRIO ABRE A PORTA, E SAI
+                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.abrePorta();
+                yield return new WaitForSeconds(1);
+                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.usuario_sair(this.GetElevador);
+                getBtn_SubirUsuario.interactable = true;
+                foreach (Button b in getBotoes_painel_elevador)
+                {
+                    b.interactable = true;
+                }
+                GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.fechaPorta();
+            }
+
+        }
     }
 
-    public IEnumerator passo_3()
-    {
-        // PASSO 3: O ELEVADOR ATENDE AOS ANDARES QUE O USUÁRIO PEDIU PARA IR. ENQUANTO TODOS NÃO FOREM ATENDIDOS, NÃO SAI DESSE MÉTODO
-
-        int numero_do_andar_desejado_atual = GetElevador.getUltimo_evento_PainelElevador_desenfileirado.getNumero_do_andar_desejado_atual();
-        String nome_andar = "andar_" + numero_do_andar_desejado_atual.ToString();
-        Animator animador_elevador = GetElevador.getAnimador_elevador;
-
-        // VAI PARA O ANDAR N
-        animador_elevador.SetBool(nome_andar, true);
-        animador_elevador.SetBool("parar", false);
-        yield return new WaitForSeconds(1);
-
-        // PARA NO ANDAR N
-        animador_elevador.SetBool(nome_andar, false);
-        GetElevador.getAndar_atual = numero_do_andar_desejado_atual;
-        yield return new WaitForSeconds(1);
-
-        // ABRE A PORTA DO ANDAR N
-        GetPredio.getAndares_de_moradores[numero_do_andar_desejado_atual - 2].abrePorta();
-        yield return new WaitForSeconds(GetElevador.getTempo_espera);
-
-        // FECHA A PORTA DO ANDAR N
-        GetPredio.getAndares_de_moradores[numero_do_andar_desejado_atual - 2].fechaPorta();
-        GetElevador.getUltimo_evento_PainelElevador_desenfileirado.atenderProximo_andar();
-        yield return new WaitForSeconds(1);
-
-        if (!GetElevador.getUltimo_evento_PainelElevador_desenfileirado.getEvento_concluido)
-        {
-            StartCoroutine(passo_3());
-        }
-        else
-        {
-            StartCoroutine(passo_4());
-            StopCoroutine(passo_3());
-        }
-
-    }
-
-
-    public IEnumerator passo_4()
-    {
-        // PASSO 4: DEPOIS DE IR A TODOS OS ANDARES PEDIDOS PELO USUÁRIO, ELE VOLTA AO 1o ANDAR.
-
-        // VOLTANDO AO 1o ANDAR
-        Animator animador_elevador = GetElevador.getAnimador_elevador;
-        animador_elevador.SetBool("andar_1", true);
-        animador_elevador.SetBool("parar", false);
-        yield return new WaitForSeconds(1);
-        animador_elevador.SetBool("andar_1", false);
-        animador_elevador.SetBool("parar", true);
-
-        // O USUÁRIO ABRE A PORTA, E SAI
-        GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.abrePorta();
-        yield return new WaitForSeconds(1);
-        GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.usuario_sair(this.GetElevador);
-        getBtn_SubirUsuario.interactable = true;
-        foreach (Button b in getBotoes_painel_elevador)
-        {
-            b.interactable = true;
-        }
-        GetElevador.getUltimo_evento_SobeDesce_desenfileirado.getAndarUsuario.fechaPorta();
-        StopCoroutine(passo_4());
-        
-    }
-
-    /*
-    public IEnumerator passo_5)
-    {
-
-    }
-    */
     //------------------------------------------------------------------------------------------------
 
     // AÇÕES DO USUÁRIO -> MÉTODOS ATIVADOS POR BOTÕES
@@ -210,6 +232,7 @@ public class GerenciadorPredio : MonoBehaviour
         {
             jogo_comecou = true;
             GetElevador.ativar_elevador();
+            StartCoroutine(opera_elevador());
         }
 
         AndarUsuario andarUsuario = GetPredio.getAndar_usuario;
@@ -217,7 +240,7 @@ public class GerenciadorPredio : MonoBehaviour
         Usuario usuario = andarUsuario.getUsuario;
 
         usuario.pedir_para_subir(andarUsuario, elevador);
-        StartCoroutine(passo_1());
+
     }
 
     public void usuarioIrParaO1oAndar()
